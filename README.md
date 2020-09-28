@@ -1,7 +1,7 @@
 # file-formatter
 Formats Microsoft Word files according to specifications
 
-# Prpoject goals and purpose
+# Purpose
 I got bored of formatting word document deliverables, so I decided to code my own automation tool to do my formatting.
 
 # APIs
