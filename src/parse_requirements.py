@@ -168,14 +168,12 @@ def find_size(spec_list):
         try:
             size_ind = spec_list.index('size')
         except ValueError:
-            return "-1"
+            return -1
 
     # more ambiguity with size specification wording, look for two before
     val = find_dict_value(spec_list, size_ind, "int")
     if val == -1:
         val = find_dict_value(spec_list, size_ind - 1, "int")
-    if val == -1:
-        return "-1"
     return val
 
 
@@ -207,7 +205,7 @@ def print_words(a_list):
 
 
 def main():
-    file_to_parse = "file.pdf"
+    file_to_parse = 'file.pdf'
     print(parse_requirements(file_to_parse))
 
 
