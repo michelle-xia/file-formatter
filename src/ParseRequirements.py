@@ -8,8 +8,7 @@ requirements = ['margin', 'margins', 'spacing', 'font', 'size', 'pages', 'spaced
 
 
 def pdf_parser(file_name):
-    """This function takes in str_to_find and returns a dictionary with the value associated with str_to_find
-    from a pdf"""
+    """This function takes in a pdf file and returns a list of specifications within the pdf file"""
     data = ""
     fp = open(file_name, 'rb')
 
