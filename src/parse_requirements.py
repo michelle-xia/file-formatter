@@ -207,7 +207,7 @@ def print_words(a_list):
 
 
 def main():
-    file_to_parse = 'UGCAF2020Assignment1.pdf'
+    file_to_parse = "file.pdf"
     print(parse_requirements(file_to_parse))
 
 
