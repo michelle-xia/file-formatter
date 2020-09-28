@@ -56,7 +56,6 @@ def get_specs(a_list):
     return [val[i] for val in a_list for i in range(len(val))]
 
 
-
 def print_words(a_list):
     for word in a_list:
         print(word)
