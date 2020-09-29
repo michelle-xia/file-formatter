@@ -14,6 +14,5 @@ I was tired of formatting word document deliverables, so I decided to code my ow
 4) If you don't have `make` you can also run the program with `python3 format_file.py`. Type the name for your formatted file **with the .docx** (don't forget to include this), space, path to save to. `./` is the current directory. As an example: ```Formatted.docx ./``` Select the PDF file with the requirements.
 
 # Dependencies
-I am using PDFMiner for input instructions and python-docx for the output template. They can be installed with the following commands:
-```pip install pdfminer```
-```pip install python-docx```
+I am using PDFMiner for input instructions and python-docx for the output template. Install PDFMiner with `pip install pdfminer` and install python-docx with 
+`pip install python-docx`
