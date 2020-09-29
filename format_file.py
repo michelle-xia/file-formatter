@@ -17,13 +17,14 @@ def run_file_formatter(r):
 
     # get requirements from file
     requirements_dict = parse_requirements(file_to_parse)
+    print(requirements_dict)
     doc_name = ""
     doc_path = ""
     for s in r:
         doc_name, doc_path = format_read(s)
 
-    # create formatted document
-    create_doc(requirements_dict, doc_name, doc_path)
+        # create formatted document
+        create_doc(requirements_dict, doc_name, doc_path)
 
 
 if __name__ == "__main__":

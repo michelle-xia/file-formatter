@@ -13,11 +13,11 @@ def create_doc(spec_dict, doc_name="", path_to_doc=""):
     font = styles.font
 
     # set font
-    if spec_dict['font'] != "-1":
+    if str(spec_dict['font']) != "-1":
         font.name = spec_dict['font'].capitalize()
 
     # set size
-    if str(spec_dict['size']) != "-1":
+    if spec_dict['size'] != -1:
         font.size = Pt(spec_dict['size'])
 
     # set margins
@@ -29,17 +29,18 @@ def create_doc(spec_dict, doc_name="", path_to_doc=""):
             section.left_margin = Inches(spec_dict['margins'])
             section.right_margin = Inches(spec_dict['margins'])
 
-    paragraph = document.add_paragraph()
+    paragraph = document.add_paragraph(str(spec_dict))
+    paragraph.style = document.styles['Normal']
+    paragraph_format = paragraph.paragraph_format
 
     # set spacing
-    if spec_dict['spacing'] != "-1":
+    if str(spec_dict['spacing']) != "-1":
         if spec_dict['spacing'] == 'single':
-            paragraph.line_spacing_rule = WD_LINE_SPACING.SINGLE
+            paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
         elif spec_dict['spacing'] == 'double':
-            paragraph.line_spacing_rule = WD_LINE_SPACING.DOUBLE
-        elif spec_dict['spacing'] == 'one_point_five':
-            paragraph.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
-    paragraph.style = document.styles['Normal']
+            paragraph_format.line_spacing_rule = WD_LINE_SPACING.DOUBLE
+        elif spec_dict['spacing'] == '1.5':
+            paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
 
     # create pages
     if spec_dict['pages'] != -1:

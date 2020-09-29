@@ -54,18 +54,17 @@ def clean_list(a_list):
 
 
 def parse_specs(a_list):
-    """This function looks through a data list and returns a list with requirement keywords"""
-    return [[a_list[i - 2], a_list[i - 1], a_list[i], a_list[i + 1], a_list[i + 2]] for i in range(
+    """This function looks through a data list and returns a list with snippets around the requirement keyword"""
+    # extract requirement phrases
+    a_list = [[a_list[i - 2], a_list[i - 1], a_list[i], a_list[i + 1], a_list[i + 2]] for i in range(
         len(a_list)) if i + 2 < len(a_list) and a_list[i] in requirements]
 
-
-def get_specs(a_list):
-    """This function works with parse_spects to separate individual elements within a spec list"""
+    # extract individual elements
     for i in range(len(a_list)):
         a_list[i] = [word.split("-") for word in a_list[i]]
 
+    # convert to 1d list
     a_list = [item[i] for item in a_list for i in range(len(item))]
-
     return [val[i].strip('\"\'') for val in a_list for i in range(len(val))]
 
 
@@ -82,26 +81,15 @@ def create_dict(spec_list):
 
 def find_margins(spec_list):
     """This function returns the margin specifications or -1"""
-    # look for 'margins'
-    try:
-        margin_ind = spec_list.index('margins')
-    except ValueError:
-        try:
-            # look for 'margin'
-            margin_ind = spec_list.index('margin')
-        except ValueError:
-            return -1
+    margin_ind = get_word_index(spec_list, "margins", "margin")
 
     return find_dict_value(spec_list, margin_ind, "float")
 
 
 def find_number_pages(spec_list):
     """This function returns the page requirements, assuming you are ambitious and write the maximum amount or -1"""
-    spec_list = get_specs(parse_specs(spec_list))
-    try:
-        page_ind = spec_list.index('pages')
-    except ValueError:
-        return -1
+    spec_list = parse_specs(spec_list)
+    page_ind = get_word_index(spec_list, "pages")
 
     return find_dict_value(spec_list, page_ind, "int")
 
@@ -109,66 +97,21 @@ def find_number_pages(spec_list):
 def find_spacing(spec_list):
     """This function returns spacing requirements or -1"""
     spacing_list = ['double', 'single', '1.5']
-    # look for 'spaced' and 'spacing'
-    try:
-        space_ind = spec_list.index('spaced')
-    except ValueError:
-        try:
-            space_ind = spec_list.index('spacing')
-        except ValueError:
-            return "-1"
-
-    # look at element before for spacing specification
-    if space_ind > 0:
-        try:
-            if spec_list[space_ind - 1] in spacing_list:
-                if spec_list[space_ind - 1] == "1.5":
-                    return 'one_point_five'
-                return spec_list[space_ind - 1]
-        except ValueError:
-            pass
-    # look at element after for spacing specification
-    try:
-        if spec_list[space_ind + 1] in spacing_list:
-            if spec_list[space_ind + 1] == "1.5":
-                return 'one_point_five'
-            return spec_list[space_ind + 1]
-    except ValueError:
-        return "-1"
+    space_ind = get_word_index(spec_list, "spaced", "spacing")
+    return find_dict_value(spec_list, space_ind, "", spacing_list)
 
 
 def find_font(spec_list):
     """This function returns font requirements or -1"""
     font_list = ['arial', 'calibri', 'cambria', 'helvetica', 'times', 'new', 'roman', 'verdana']
-    try:
-        font_ind = spec_list.index('type')
-    except ValueError:
-        try:
-            font_ind = spec_list.index('font')
-        except ValueError:
-            return "-1"
-    if font_ind > 0:
-        if spec_list[font_ind - 1] in font_list:
-            return spec_list[font_ind - 1]
-    try:
-        if spec_list[font_ind + 1] in font_list:
-            return spec_list[font_ind + 1]
-    except ValueError:
-        pass
-
-    return "-1"
+    font_ind = get_word_index(spec_list, "type", "font")
+    return find_dict_value(spec_list, font_ind, "", font_list)
 
 
 def find_size(spec_list):
     """This function returns font size requirements or -1"""
-    spec_list = get_specs(parse_specs(spec_list))
-    try:
-        size_ind = spec_list.index('point')
-    except ValueError:
-        try:
-            size_ind = spec_list.index('size')
-        except ValueError:
-            return -1
+    spec_list = parse_specs(spec_list)
+    size_ind = get_word_index(spec_list, "point", "size")
 
     # more ambiguity with size specification wording, look for two before
     val = find_dict_value(spec_list, size_ind, "int")
@@ -177,22 +120,39 @@ def find_size(spec_list):
     return val
 
 
-def find_dict_value(spec_list, ind, val_type=""):
+def get_word_index(spec_list, w1, w2=""):
+    try:
+        return spec_list.index(w1)
+    except ValueError:
+        try:
+            return spec_list.index(w2)
+        except ValueError:
+            return -1
+
+
+def find_dict_value(spec_list, ind, val_type="", word_bank=[]):
     """This function returns the requirement value found to the left or right in spec_list or -1"""
     # look at element before for specification
-    if ind > 0:
-        try:
-            if val_type == "int":
-                return int(spec_list[ind - 1])
-            elif val_type == "float":
-                return float(spec_list[ind - 1])
-        except ValueError:
-            pass
+    try:
+        if val_type == "int":
+            return int(spec_list[ind - 1])
+        elif val_type == "float":
+            return float(spec_list[ind - 1])
+        elif len(word_bank) > 0:
+            if spec_list[ind - 1] in word_bank:
+                return spec_list[ind - 1]
+    except ValueError:
+        pass
     # look at element after for specification
     try:
         if val_type == "int":
             return int(spec_list[ind + 1])
         elif val_type == "float":
             return float(spec_list[ind + 1])
+        elif len(word_bank) > 0:
+            if spec_list[ind + 1] in word_bank:
+                return spec_list[ind + 1]
+        else:
+            return -1
     except ValueError:
         return -1
