@@ -1,4 +1,3 @@
-from src.parse_requirements import parse_requirements
 from docx import Document
 from docx.shared import Pt
 from docx.shared import Inches
@@ -48,16 +47,13 @@ def create_doc(spec_dict, doc_name="", path_to_doc=""):
             document.add_page_break()
 
     # save doc
-    if doc_name == "" and path_to_doc == "":
-        document.save('Formatted.docx')
+    if doc_name != "" and path_to_doc != "":
+        path_to_doc = os.path.join(path_to_doc, doc_name)
+        document.save(path_to_doc)
     elif path_to_doc != "":
         path_to_doc = os.path.join(path_to_doc, 'Formatted.docx')
         document.save(path_to_doc)
     elif doc_name != "":
         document.save(doc_name)
-
-
-if __name__ == "__main__":
-    requirements_dict = parse_requirements('file.pdf')
-    print(requirements_dict)
-    create_doc(requirements_dict)
+    else:
+        document.save('Formatted.docx')
