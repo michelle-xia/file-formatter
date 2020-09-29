@@ -1,5 +1,5 @@
 # file-formatter
-Formats Microsoft Word files according to specifications
+Formats Microsoft Word files according to instructions from a PDF file
 
 # Purpose
 I was tired of formatting word document deliverables, so I decided to code my own automation tool to do the formatting.
@@ -16,3 +16,6 @@ I was tired of formatting word document deliverables, so I decided to code my ow
 # Dependencies
 I am using PDFMiner for input instructions and python-docx for the output template. Install PDFMiner with `pip install pdfminer` and install python-docx with 
 `pip install python-docx`
+
+# Requirements
+This project requires python 3.6 and above to run. The requirements file must be a PDF.
