@@ -17,7 +17,6 @@ def run_file_formatter(r):
 
     # get requirements from file
     requirements_dict = parse_requirements(file_to_parse)
-    print(requirements_dict)
     doc_name = ""
     doc_path = ""
     for s in r:
