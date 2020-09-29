@@ -198,17 +198,7 @@ def find_dict_value(spec_list, ind, val_type=""):
         return -1
 
 
-def print_words(a_list):
-    """This function prints the elements in a 2d list"""
-    for element in a_list:
-        print(element)
-
-
-def main():
+if __name__ == "__main__":
     file_to_parse = 'file.pdf'
     print(parse_requirements(file_to_parse))
-
-
-if __name__ == "__main__":
-    main()
 
