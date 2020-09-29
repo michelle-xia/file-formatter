@@ -15,5 +15,5 @@ I was tired of formatting word document deliverables, so I decided to code my ow
 
 # Dependencies
 I am using PDFMiner for input instructions and python-docx for the output template. They can be installed with the following commands:
-`pip install pdfminer`
-`pip install python-docx`
+```pip install pdfminer```
+```pip install python-docx```
