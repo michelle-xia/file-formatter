@@ -152,7 +152,5 @@ def find_dict_value(spec_list, ind, val_type="", word_bank=[]):
         elif len(word_bank) > 0:
             if spec_list[ind + 1] in word_bank:
                 return spec_list[ind + 1]
-        else:
-            return -1
     except ValueError:
-        return -1
+        return None
