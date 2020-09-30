@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
 from pdfminer.converter import TextConverter
@@ -83,7 +85,13 @@ def find_margins(spec_list):
     """This function returns the margin specifications or -1"""
     margin_ind = get_word_index(spec_list, "margins", "margin")
 
-    return find_dict_value(spec_list, margin_ind, "float")
+    # more ambiguity with margin specification wording, look for two before and after
+    val = find_dict_value(spec_list, margin_ind, "float")
+    if val is None:
+        val = find_dict_value(spec_list, margin_ind - 1, "float")
+        if val is None:
+            val = find_dict_value(spec_list, margin_ind + 1, "float")
+    return val
 
 
 def find_number_pages(spec_list):
@@ -98,14 +106,24 @@ def find_spacing(spec_list):
     """This function returns spacing requirements or -1"""
     spacing_list = ['double', 'single', '1.5']
     space_ind = get_word_index(spec_list, "spaced", "spacing")
-    return find_dict_value(spec_list, space_ind, "", spacing_list)
+    spacing = find_dict_value(spec_list, space_ind, "", spacing_list)
+    if spacing is None:
+        spacing = find_dict_value(spec_list, get_word_index(spec_list, "spacing"), "", spacing_list)
+    return spacing
 
 
 def find_font(spec_list):
     """This function returns font requirements or -1"""
     font_list = ['arial', 'calibri', 'cambria', 'helvetica', 'times', 'new', 'roman', 'verdana']
+    times_new_roman = ['times', 'new', 'roman']
+
     font_ind = get_word_index(spec_list, "type", "font")
-    return find_dict_value(spec_list, font_ind, "", font_list)
+    font = find_dict_value(spec_list, font_ind, "", font_list)
+    if font is None:
+        font = find_dict_value(spec_list, get_word_index(spec_list, 'font'), "", font_list)
+    if font in times_new_roman:
+        font = 'Times New Roman'
+    return font
 
 
 def find_size(spec_list):
@@ -115,8 +133,12 @@ def find_size(spec_list):
 
     # more ambiguity with size specification wording, look for two before
     val = find_dict_value(spec_list, size_ind, "int")
-    if val == -1:
+    if val is None:
         val = find_dict_value(spec_list, size_ind - 1, "int")
+    if val is None:
+        val = find_dict_value(spec_list, get_word_index(spec_list, "size"), "int")
+        if val is None:
+            val = find_dict_value(spec_list, get_word_index(spec_list, "size") - 1, "int")
     return val
 
 

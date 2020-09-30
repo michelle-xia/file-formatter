@@ -1,5 +1,7 @@
-from parse_requirements import parse_requirements
-from create_formatted_doc import create_doc
+#!/usr/bin/env python3
+
+from ParseRequirements import parse_requirements
+from CreateDoc import create_doc
 import sys
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
