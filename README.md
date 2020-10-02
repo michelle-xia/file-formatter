@@ -5,7 +5,7 @@ Formats Microsoft Word files according to instructions from a PDF file
 I was tired of formatting word document deliverables, so I decided to code my own automation tool to do the formatting.
 
 # Usage
-1) Clone the repository with `git clone https://github.com/michelle-xia/file-formatter.git` update [WordDoc.in](WordDoc.in) with what you want to name your formatted file, followed by a space, and the path you want to save the formatted file in. Check [WordDoc.in](WordDoc.in) for an example. The default directory is the current one.
+1) Clone the repository with `git clone https://github.com/michelle-xia/file-formatter.git`. Update [WordDoc.in](WordDoc.in) with what you want to name your formatted file, followed by a space, and the path you want to save the formatted file in. Check [WordDoc.in](WordDoc.in) for an example. The default directory is the current one.
 
 2) Install the libraries with pip (see below).
 
