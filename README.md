@@ -7,9 +7,7 @@ I was tired of formatting word document deliverables, so I decided to code my ow
 # Usage
 1) Clone the repository with `git clone https://github.com/michelle-xia/file-formatter.git`. Update [WordDoc.in](WordDoc.in) with what you want to name your formatted file, followed by a space, and the path you want to save the formatted file in. Check [WordDoc.in](WordDoc.in) for an example. The default directory is the current one.
 
-2) Install requirements with:
-
-```pip install -r requirements.txt```
+2) Install requirements with ```pip install -r requirements.txt```
 
 3) If you have `make` installed, run `make file`. On Windows, you can install MinGW [here](https://sourceforge.net/projects/mingw/files/latest/download?source=files) and add `C:\MinGW\msys\1.0\bin` to your PATH. After you run `make file` select the PDF file with the requirements, and you've got your formatted document.
 
